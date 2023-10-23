@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+ <!--
+    Author: Alexa Grace LaFontaine-Larson
+    Project: Matchmaker
+
+    All rights reserved.
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Matchmaker</title>
+</head>
+
+<body>
+    <h1>Matchmaker for the Web!</h1>
+    <p>Instructions: Read each prompt carefully and click on the drop down and choose whichever option you agree with the most.
+        After answering all the prompts, click on the "Calculate Compatibility" button to get your results!
+    </p>
+
+    <!-- Reference for HTML "option" tabs/fields: https://www.w3schools.com/tags/tag_option.asp-->
+    
+    <label>Pink is the best color.</label>
+    <select id="q1">
+      <option value="5">Strongly Agree</option>
+      <option value="4">Agree</option>
+      <option value="3">Neutral</option>
+      <option value="2">Disagree</option>
+      <option value="1">Strongly Disagree</option>
+    </select>
+    <br /><br /><br />
+
+    <label>Summer is the best season.</label>
+    <select id="q2">
+      <option value="5">Strongly Agree</option>
+      <option value="4">Agree</option>
+      <option value="3">Neutral</option>
+      <option value="2">Disagree</option>
+      <option value="1">Strongly Disagree</option>
+    </select>
+    <br /><br /><br />
+
+    <label>Country is the best music genre.</label>
+    <select id="q3">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+      </select>
+      <br /><br /><br />
+      
+      <label>Cats are better than dogs.</label>
+      <select id="q4">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+      </select>
+      <br /><br /><br />
+
+      <label>Dr. Pepper is the best soda.</label>
+      <select id="q5">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+      </select>
+      <br /><br /><br />
+
+    <button onclick="CalculateCompatibility()">Calculate Compatibility</button>
+    <p id="compatibility"></p>
+    <p id="message"></p>
+<script>
+console.log("Starting Matchmaker Lite...")
+
+function CalculateCompatibility(){
+    console.log("CalculateCompatibility")
+
+    const MESSAGE_PERFECT = "WOW! A perfect score! We are meant to be."
+    const MESSAGE_GREAT ="We can be besties!"
+    const MESSAGE_GOOD = "We can be friends."
+    const MESSAGE_BAD = "This isn't going to work out..."
+
+    const DESIRED_RESPONSE = [
+        5,
+        2,
+        1,
+        3,
+        5
+    ]
+
+    const MAX_SCORE = 25
+
+    let Question1Response = document.getElementById("q1").selectedOptions[0].value;
+    let Question2Response = document.getElementById("q2").selectedOptions[0].value;
+    let Question3Response = document.getElementById("q3").selectedOptions[0].value;
+    let Question4Response = document.getElementById("q4").selectedOptions[0].value;
+    let Question5Response = document.getElementById("q5").selectedOptions[0].value;
+
+    let question1Compatibility = 5 - Math.abs(Question1Response - DESIRED_RESPONSE[0]);
+    let question2Compatibility = 5 - Math.abs(Question2Response - DESIRED_RESPONSE[1]);
+    let question3Compatibility = 5 - Math.abs(Question3Response - DESIRED_RESPONSE[2]);
+    let question4Compatibility = 5 - Math.abs(Question4Response - DESIRED_RESPONSE[3]);
+    let question5Compatibility = 5 - Math.abs(Question5Response - DESIRED_RESPONSE[4]);
+
+    console.log("c1="+question1Compatibility);
+    console.log("c2="+question2Compatibility);
+    console.log("c3="+question3Compatibility);
+    console.log("c4="+question4Compatibility);
+    console.log("c5="+question5Compatibility);
+
+    let totalCompatibility = question1Compatibility + question2Compatibility + question3Compatibility + question4Compatibility + question5Compatibility;
+
+    totalCompatibility *= 100 / MAX_SCORE;
+    totalCompatibility = Math.round(totalCompatibility);
+    console.log("tc=" + totalCompatibility);
+
+    document.getElementById("compatibility").innerHTML = "Your compatibility is: " + totalCompatibility;
+
+    if (totalCompatibility === 100){
+        console.log(MESSAGE_PERFECT);
+        document.getElementById("message").innerHTML = MESSAGE_PERFECT;
+    }
+    else if (totalCompatibility>=75){
+        console.log(MESSAGE_GREAT);
+        document.getElementById("message").innerHTML = MESSAGE_GREAT;
+    }
+    else if (totalCompatibility >= 50) {
+        console.log(MESSAGE_GOOD);
+        document.getElementById("message").innerHTML = MESSAGE_GOOD;
+    }
+    else {
+        console.log(MESSAGE_BAD);
+        document.getElementById("message").innerHTML = MESSAGE_BAD;
+    }
+}
+
+</script>
+
+</body>
+</html>
